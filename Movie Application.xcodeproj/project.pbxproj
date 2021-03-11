@@ -13,6 +13,13 @@
 		2B00D50E25FACEF30097485A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B00D50C25FACEF30097485A /* Main.storyboard */; };
 		2B00D51025FACEF40097485A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2B00D50F25FACEF40097485A /* Assets.xcassets */; };
 		2B00D51325FACEF40097485A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B00D51125FACEF40097485A /* LaunchScreen.storyboard */; };
+		2B00D51F25FACFA60097485A /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B00D51E25FACFA60097485A /* Movie.swift */; };
+		2B00D52325FACFEB0097485A /* AddMovieDelegation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B00D52225FACFEB0097485A /* AddMovieDelegation.swift */; };
+		2B00D52625FAD0160097485A /* SelectGendra.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B00D52525FAD0160097485A /* SelectGendra.swift */; };
+		2B00D52A25FAD09C0097485A /* MovieTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B00D52925FAD09C0097485A /* MovieTableViewController.swift */; };
+		2B00D52D25FAD1350097485A /* MovieTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B00D52C25FAD1350097485A /* MovieTableViewCell.swift */; };
+		2B00D53025FAD17D0097485A /* AddMovieViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B00D52F25FAD17D0097485A /* AddMovieViewController.swift */; };
+		2B00D53325FAD1D80097485A /* GenraTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B00D53225FAD1D80097485A /* GenraTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +31,13 @@
 		2B00D50F25FACEF40097485A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2B00D51225FACEF40097485A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2B00D51425FACEF40097485A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2B00D51E25FACFA60097485A /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
+		2B00D52225FACFEB0097485A /* AddMovieDelegation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMovieDelegation.swift; sourceTree = "<group>"; };
+		2B00D52525FAD0160097485A /* SelectGendra.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectGendra.swift; sourceTree = "<group>"; };
+		2B00D52925FAD09C0097485A /* MovieTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieTableViewController.swift; sourceTree = "<group>"; };
+		2B00D52C25FAD1350097485A /* MovieTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieTableViewCell.swift; sourceTree = "<group>"; };
+		2B00D52F25FAD17D0097485A /* AddMovieViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMovieViewController.swift; sourceTree = "<group>"; };
+		2B00D53225FAD1D80097485A /* GenraTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenraTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,15 +70,46 @@
 		2B00D50525FACEF30097485A /* Movie Application */ = {
 			isa = PBXGroup;
 			children = (
+				2B00D51D25FACF5D0097485A /* View */,
+				2B00D51C25FACF4E0097485A /* Controllers */,
+				2B00D51B25FACF360097485A /* Model */,
 				2B00D50625FACEF30097485A /* AppDelegate.swift */,
 				2B00D50825FACEF30097485A /* SceneDelegate.swift */,
-				2B00D50A25FACEF30097485A /* ViewController.swift */,
-				2B00D50C25FACEF30097485A /* Main.storyboard */,
 				2B00D50F25FACEF40097485A /* Assets.xcassets */,
-				2B00D51125FACEF40097485A /* LaunchScreen.storyboard */,
 				2B00D51425FACEF40097485A /* Info.plist */,
 			);
 			path = "Movie Application";
+			sourceTree = "<group>";
+		};
+		2B00D51B25FACF360097485A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				2B00D51E25FACFA60097485A /* Movie.swift */,
+				2B00D52225FACFEB0097485A /* AddMovieDelegation.swift */,
+				2B00D52525FAD0160097485A /* SelectGendra.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		2B00D51C25FACF4E0097485A /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				2B00D50A25FACEF30097485A /* ViewController.swift */,
+				2B00D52925FAD09C0097485A /* MovieTableViewController.swift */,
+				2B00D52C25FAD1350097485A /* MovieTableViewCell.swift */,
+				2B00D52F25FAD17D0097485A /* AddMovieViewController.swift */,
+				2B00D53225FAD1D80097485A /* GenraTableViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		2B00D51D25FACF5D0097485A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				2B00D50C25FACEF30097485A /* Main.storyboard */,
+				2B00D51125FACEF40097485A /* LaunchScreen.storyboard */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,9 +182,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2B00D52625FAD0160097485A /* SelectGendra.swift in Sources */,
+				2B00D53325FAD1D80097485A /* GenraTableViewController.swift in Sources */,
 				2B00D50B25FACEF30097485A /* ViewController.swift in Sources */,
+				2B00D53025FAD17D0097485A /* AddMovieViewController.swift in Sources */,
 				2B00D50725FACEF30097485A /* AppDelegate.swift in Sources */,
+				2B00D52325FACFEB0097485A /* AddMovieDelegation.swift in Sources */,
+				2B00D51F25FACFA60097485A /* Movie.swift in Sources */,
 				2B00D50925FACEF30097485A /* SceneDelegate.swift in Sources */,
+				2B00D52D25FAD1350097485A /* MovieTableViewCell.swift in Sources */,
+				2B00D52A25FAD09C0097485A /* MovieTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
