@@ -1,13 +1,14 @@
+import UIKit
 
 class Movie{
     
     var title : String
-    var image : String
+    var image : UIImage
     var rate : Double
     var releaseYear : Int
     var genra : [String]
     
-    init(title movieTitle : String, image movieImage : String, rate movieRate : Double, releaseYear movieRelease : Int, genra movieGenra : [String]) {
+    init(title movieTitle : String, image movieImage : UIImage, rate movieRate : Double, releaseYear movieRelease : Int, genra movieGenra : [String]) {
         
         self.title = movieTitle
         self.image = movieImage

@@ -1,16 +1,11 @@
-//
-//  ViewController.swift
-//  Movie Application
-//
-//  Created by Hala on 12/03/2021.
-//
+
 
 import UIKit
 
 class ViewController: UIViewController {
 
     var name : String?
-    var image : String?
+    var image : UIImage?
     var rate : Double?
     var releaseYear : Int?
     var genra : [String]?
@@ -26,7 +21,7 @@ class ViewController: UIViewController {
         rateLabel.text = String(rate!)
         
         movieImage.layer.cornerRadius = 20
-        movieImage.image = UIImage(named: image!)
+        movieImage.image = image!
         
         
         

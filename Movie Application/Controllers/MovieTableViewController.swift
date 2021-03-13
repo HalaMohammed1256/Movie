@@ -21,29 +21,21 @@ class MovieTableViewController: UITableViewController, AddMovie{
         
         genraArray = ["Science fiction", "adventure", "family", "ambiguity", "action", "drama", "Horror", "Musical"]
         
-        movieArray.append(Movie(title: "Harry Potter and the Order of the Phoenix", image: "harry", rate: 5, releaseYear: 2007, genra: [genraArray[0], genraArray[1], genraArray[2], genraArray[3], genraArray[4]]))
+        movieArray.append(Movie(title: "Harry Potter and the Order of the Phoenix", image: UIImage(named: "harry")!, rate: 5, releaseYear: 2007, genra: [genraArray[0], genraArray[1], genraArray[2], genraArray[3], genraArray[4]]))
         
-        movieArray.append(Movie(title: "Mulan", image: "mulan", rate: 4, releaseYear: 2020, genra: [genraArray[4], genraArray[5], genraArray[2], genraArray[1]]))
+        movieArray.append(Movie(title: "Mulan", image: UIImage(named:"mulan")!, rate: 4, releaseYear: 2020, genra: [genraArray[4], genraArray[5], genraArray[2], genraArray[1]]))
         
-        movieArray.append(Movie(title: "The Darkest Mind", image: "darkest", rate: 4.5, releaseYear: 2018, genra: [genraArray[0], genraArray[1], genraArray[2], genraArray[3], genraArray[4]]))
+        movieArray.append(Movie(title: "The Darkest Mind", image: UIImage(named:"darkest")!, rate: 4.5, releaseYear: 2018, genra: [genraArray[0], genraArray[1], genraArray[2], genraArray[3], genraArray[4]]))
         
-        movieArray.append(Movie(title: "Bird Box", image: "bird", rate: 3.9, releaseYear: 2018, genra: [genraArray[0], genraArray[5], genraArray[6]]))
+        movieArray.append(Movie(title: "Bird Box", image: UIImage(named:"bird")!, rate: 3.9, releaseYear: 2018, genra: [genraArray[0], genraArray[5], genraArray[6]]))
         
-        movieArray.append(Movie(title: "Frozen II", image: "frozen", rate: 5, releaseYear: 2020, genra: [genraArray[5], genraArray[1], genraArray[2], genraArray[7]]))
+        movieArray.append(Movie(title: "Frozen II", image: UIImage(named:"frozen")!, rate: 5, releaseYear: 2020, genra: [genraArray[5], genraArray[1], genraArray[2], genraArray[7]]))
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
         self.tableView.reloadData()
     }
-    
-
-//    func addMovieDelegation(title: String, image: String, rate: Double, releaseYear: Int, genra: [String]) {
-//
-//        movieArray.append()
-//    title : String, image : String, rate : Double, releaseYear : Int, genra : [String]
-//
-//    }
     
     func addMovieDelegation(movie: Movie) {
         movieArray.append(movie)
@@ -85,7 +77,7 @@ extension MovieTableViewController{
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! MovieTableViewCell
 
         cell.movieName.text = movieArray[indexPath.row].title
-        cell.movieImage.image = UIImage(named: movieArray[indexPath.row].image)
+        cell.movieImage.image = movieArray[indexPath.row].image
         cell.movieGenra.text = movieArray[indexPath.row].genra.joined(separator: " | ")
 
         return cell
@@ -111,53 +103,7 @@ extension MovieTableViewController{
         return 150
     }
     
-    
-    
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
     
 }

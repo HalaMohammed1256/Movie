@@ -20,6 +20,7 @@
 		2B00D52D25FAD1350097485A /* MovieTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B00D52C25FAD1350097485A /* MovieTableViewCell.swift */; };
 		2B00D53025FAD17D0097485A /* AddMovieViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B00D52F25FAD17D0097485A /* AddMovieViewController.swift */; };
 		2B00D53325FAD1D80097485A /* GenraTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B00D53225FAD1D80097485A /* GenraTableViewController.swift */; };
+		2B89E5BD25FD36DD008418B2 /* NetworkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B89E5BC25FD36DD008418B2 /* NetworkModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		2B00D52C25FAD1350097485A /* MovieTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieTableViewCell.swift; sourceTree = "<group>"; };
 		2B00D52F25FAD17D0097485A /* AddMovieViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMovieViewController.swift; sourceTree = "<group>"; };
 		2B00D53225FAD1D80097485A /* GenraTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenraTableViewController.swift; sourceTree = "<group>"; };
+		2B89E5BC25FD36DD008418B2 /* NetworkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +89,7 @@
 				2B00D51E25FACFA60097485A /* Movie.swift */,
 				2B00D52225FACFEB0097485A /* AddMovieDelegation.swift */,
 				2B00D52525FAD0160097485A /* SelectGendra.swift */,
+				2B89E5BC25FD36DD008418B2 /* NetworkModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -184,6 +187,7 @@
 			files = (
 				2B00D52625FAD0160097485A /* SelectGendra.swift in Sources */,
 				2B00D53325FAD1D80097485A /* GenraTableViewController.swift in Sources */,
+				2B89E5BD25FD36DD008418B2 /* NetworkModel.swift in Sources */,
 				2B00D50B25FACEF30097485A /* ViewController.swift in Sources */,
 				2B00D53025FAD17D0097485A /* AddMovieViewController.swift in Sources */,
 				2B00D50725FACEF30097485A /* AppDelegate.swift in Sources */,

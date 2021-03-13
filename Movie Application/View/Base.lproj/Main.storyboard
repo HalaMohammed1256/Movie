@@ -11,13 +11,13 @@
         <!--Movie Table View Controller-->
         <scene sceneID="dfi-sO-spX">
             <objects>
-                <tableViewController id="Bvl-o9-plN" customClass="MovieTableViewController" customModule="Movie" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="Bvl-o9-plN" customClass="MovieTableViewController" customModule="Movie_Application" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="fYG-8T-F5l">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="150" id="cOO-IN-lF1" customClass="MovieTableViewCell" customModule="Movie" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="150" id="cOO-IN-lF1" customClass="MovieTableViewCell" customModule="Movie_Application" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="414" height="150"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="cOO-IN-lF1" id="0EA-zM-lET">
@@ -84,7 +84,7 @@
         <!--View Controller-->
         <scene sceneID="9fS-Qv-oK7">
             <objects>
-                <viewController storyboardIdentifier="show_data" id="aqp-PR-WMg" customClass="ViewController" customModule="Movie" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="show_data" id="aqp-PR-WMg" customClass="ViewController" customModule="Movie_Application" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="T9O-JQ-Gdv">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -117,21 +117,21 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Relase year" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7dq-t9-BEf">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7dq-t9-BEf">
                                 <rect key="frame" x="205" y="484" width="182" height="58"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Relase year" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cZi-yi-6Ui">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cZi-yi-6Ui">
                                 <rect key="frame" x="198" y="550" width="182" height="58"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Relase year" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qTY-SU-TRj">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qTY-SU-TRj">
                                 <rect key="frame" x="205" y="418" width="182" height="58"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
@@ -172,7 +172,7 @@
         <!--Add Movie View Controller-->
         <scene sceneID="PU0-7i-P6q">
             <objects>
-                <viewController storyboardIdentifier="add_ movie" id="guu-as-V4f" customClass="AddMovieViewController" customModule="Movie" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="add_ movie" id="guu-as-V4f" customClass="AddMovieViewController" customModule="Movie_Application" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Nb9-rh-HKl">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -186,8 +186,8 @@
                                     <action selector="saveNewMovie:" destination="guu-as-V4f" eventType="touchUpInside" id="rV8-Jx-No6"/>
                                 </connections>
                             </button>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="harry" translatesAutoresizingMaskIntoConstraints="NO" id="dqI-Cj-gD5">
-                                <rect key="frame" x="43" y="113" width="329" height="269"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="default" translatesAutoresizingMaskIntoConstraints="NO" id="dqI-Cj-gD5">
+                                <rect key="frame" x="65" y="111" width="329" height="269"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -242,18 +242,26 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WOS-Ic-ele">
-                                <rect key="frame" x="354" y="650" width="40" height="24"/>
+                                <rect key="frame" x="362" y="646" width="32" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <state key="normal" backgroundImage="arrow.turn.up.right" catalog="system">
                                     <color key="titleColor" red="0.12984204290000001" green="0.12984612579999999" blue="0.12984395030000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="test:" destination="guu-as-V4f" eventType="touchUpInside" id="2hQ-ir-pNs"/>
+                                    <action selector="selectGenra:" destination="guu-as-V4f" eventType="touchUpInside" id="e0w-rU-wTB"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zDn-fN-NuO">
+                                <rect key="frame" x="20" y="348" width="32" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" backgroundImage="square.and.arrow.up" catalog="system"/>
+                                <connections>
+                                    <action selector="uploadImageButton:" destination="guu-as-V4f" eventType="touchUpInside" id="TOD-Au-hwz"/>
                                 </connections>
                             </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="eb4-id-81Q">
-                                <rect key="frame" x="147" y="648" width="199" height="143"/>
+                                <rect key="frame" x="119" y="648" width="244" height="143"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <color key="textColor" systemColor="labelColor"/>
@@ -270,7 +278,6 @@
                         <outlet property="movieRate" destination="d0G-YO-yOl" id="uQP-kZ-w1H"/>
                         <outlet property="movieReleaseYear" destination="M4V-Ya-rcL" id="rEv-D0-a0G"/>
                         <outlet property="movieTitle" destination="D47-xT-H2W" id="Hcg-re-tXn"/>
-                        <outlet property="selectGenra" destination="WOS-Ic-ele" id="guK-g9-Fmt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RII-NY-ZuP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -280,7 +287,7 @@
         <!--Genra Table View Controller-->
         <scene sceneID="Cyc-Ol-NYg">
             <objects>
-                <viewController storyboardIdentifier="select_gendra" id="5NB-xF-u91" customClass="GenraTableViewController" customModule="Movie" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="select_gendra" id="5NB-xF-u91" customClass="GenraTableViewController" customModule="Movie_Application" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="e1s-Z5-KKE">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -354,7 +361,8 @@
     </scenes>
     <resources>
         <image name="arrow.turn.up.right" catalog="system" width="128" height="99"/>
-        <image name="harry" width="300" height="450"/>
+        <image name="default" width="500" height="500"/>
+        <image name="square.and.arrow.up" catalog="system" width="115" height="128"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
