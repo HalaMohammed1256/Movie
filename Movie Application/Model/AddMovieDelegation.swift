@@ -1,6 +1,6 @@
 
 
 
-protocol AddMovie {
+protocol AddMovieProtocol {
     func addMovieDelegation (movie :Movie)
 }

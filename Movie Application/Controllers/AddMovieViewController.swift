@@ -2,11 +2,13 @@
 
 import UIKit
 
-class AddMovieViewController: UIViewController, SelectGendraDelegation {
+class AddMovieViewController: UIViewController, SelectGendraProtocol {
 
-    var addProtocol : AddMovie?
+    var addProtocol : AddMovieProtocol?
     var genra : [String]?
     var genraArray : [String]?
+    
+    var img : String = ""
     
     
     func selectGendra(gendra: [String]) {
@@ -19,8 +21,8 @@ class AddMovieViewController: UIViewController, SelectGendraDelegation {
         
         movieImage.layer.borderColor = UIColor.gray.cgColor
         movieImage.layer.borderWidth = 2
-                
 
+        
     }
     
     
@@ -32,6 +34,7 @@ class AddMovieViewController: UIViewController, SelectGendraDelegation {
 
         selectGenra.genraDelegation = self
         selectGenra.genraArray = genra!
+        
 
         self.present(selectGenra, animated: true, completion: nil)
         
@@ -42,7 +45,14 @@ class AddMovieViewController: UIViewController, SelectGendraDelegation {
     
     @IBAction func saveNewMovie(_ sender: Any) {
         
-        addProtocol?.addMovieDelegation(movie: Movie(title: movieTitle.text!, image:movieImage.image!, rate: Double(movieRate.text!)!, releaseYear: Int(movieReleaseYear.text!)!, genra: genraArray!))
+        // image:movieImage.image!
+//        addProtocol?.addMovieDelegation(movie: Movie(title: movieTitle.text!, rating: Double(movieRate.text!)!, releaseYear: Int(movieReleaseYear.text!)!, genre: genraArray!))
+        
+        
+        
+        addProtocol?.addMovieDelegation(movie: Movie(title: movieTitle.text!, imgData: movieImage.image!.pngData()!, rate: Double(movieRate.text!)!, releaseYear: Int(movieReleaseYear.text!)!, genra: genraArray!))
+        
+        print(img)
         
         self.dismiss(animated: true, completion: nil)
     }
@@ -74,6 +84,10 @@ class AddMovieViewController: UIViewController, SelectGendraDelegation {
 extension AddMovieViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        
+        print(info)
+        
         
         if let image = info[UIImagePickerController.InfoKey(rawValue: "UIImagePickerControllerEditedImage")] as? UIImage {
             movieImage.image = image

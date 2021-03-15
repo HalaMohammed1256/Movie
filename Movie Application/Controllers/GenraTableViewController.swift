@@ -11,7 +11,7 @@ class GenraTableViewController: UIViewController, UITableViewDelegate, UITableVi
 
     var selectedItems = [String]()
     
-    var genraDelegation : SelectGendraDelegation?
+    var genraDelegation : SelectGendraProtocol?
     var genraArray : [String] = [""]
     
     

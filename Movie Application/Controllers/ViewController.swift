@@ -5,10 +5,11 @@ import UIKit
 class ViewController: UIViewController {
 
     var name : String?
-    var image : UIImage?
+    var image : String?
     var rate : Double?
     var releaseYear : Int?
     var genra : [String]?
+    var imageData : Data?
     
         
     override func viewDidLoad() {
@@ -19,9 +20,16 @@ class ViewController: UIViewController {
         titleLabel.text = name!
         gendraTextView.text = String(genra!.joined(separator: " | "))
         rateLabel.text = String(rate!)
-        
         movieImage.layer.cornerRadius = 20
-        movieImage.image = image!
+        
+        if imageData != nil{
+            movieImage.image = UIImage(data: imageData!)
+            
+        }else{
+            movieImage.sd_setImage(with: URL(string: image!), placeholderImage: UIImage(named: "placeholder.png"))
+        }
+        
+        
         
         
         

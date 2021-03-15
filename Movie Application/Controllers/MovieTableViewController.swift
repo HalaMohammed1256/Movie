@@ -1,44 +1,65 @@
-//
-//  MovieTableViewController.swift
-//  Movie Application
-//
-//  Created by Hala on 12/03/2021.
-//
+
 
 import UIKit
+import SDWebImage
+import CoreData
+import Reachability
 
-class MovieTableViewController: UITableViewController, AddMovie{
+class MovieTableViewController: UITableViewController, AddMovieProtocol{
 
-    var movieArray : [Movie] = []
-    var genraArray : [String] = []
+    var movieArray = [Movie]()
+    var genraArray = [String]()
+    var movieAddedArray = [Movie]()
     
     
+    //declare this property where it won't go out of scope relative to your listener
+    let reachability = try! Reachability()
+    
+    
+    let context : NSManagedObjectContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        genraArray = ["Action", "Drama", "Sci-Fi", "Thriller", "Adventure", "History", "Animation", "Comedy", "Family", "Horror", "Crime"]
+
+        
         self.tableView.tableFooterView = UIView.init(frame: CGRect.zero)
         
-        genraArray = ["Science fiction", "adventure", "family", "ambiguity", "action", "drama", "Horror", "Musical"]
+    
+
+        reachability.whenReachable = { [self] reachability in
+            if reachability.connection == .wifi || reachability.connection == .cellular{
+                print("Reachable via WiFi")
+                
+                ConnectToApi()
+                fetchFromCoreData()
+            }
+        }
         
-        movieArray.append(Movie(title: "Harry Potter and the Order of the Phoenix", image: UIImage(named: "harry")!, rate: 5, releaseYear: 2007, genra: [genraArray[0], genraArray[1], genraArray[2], genraArray[3], genraArray[4]]))
+        reachability.whenUnreachable = { [self] _ in
+            print("Not reachable")
+            
+            fetchFromCoreData()
+        }
         
-        movieArray.append(Movie(title: "Mulan", image: UIImage(named:"mulan")!, rate: 4, releaseYear: 2020, genra: [genraArray[4], genraArray[5], genraArray[2], genraArray[1]]))
+        ConnectToApi()
+        fetchFromCoreData()
         
-        movieArray.append(Movie(title: "The Darkest Mind", image: UIImage(named:"darkest")!, rate: 4.5, releaseYear: 2018, genra: [genraArray[0], genraArray[1], genraArray[2], genraArray[3], genraArray[4]]))
         
-        movieArray.append(Movie(title: "Bird Box", image: UIImage(named:"bird")!, rate: 3.9, releaseYear: 2018, genra: [genraArray[0], genraArray[5], genraArray[6]]))
-        
-        movieArray.append(Movie(title: "Frozen II", image: UIImage(named:"frozen")!, rate: 5, releaseYear: 2020, genra: [genraArray[5], genraArray[1], genraArray[2], genraArray[7]]))
-        
+                        
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        
         self.tableView.reloadData()
     }
     
     func addMovieDelegation(movie: Movie) {
         movieArray.append(movie)
+        
+        saveToCoreData(movieData: movie)
         
         self.tableView.reloadData()
     }
@@ -59,6 +80,118 @@ class MovieTableViewController: UITableViewController, AddMovie{
 }
 
 
+// core data
+extension MovieTableViewController{
+    
+    
+    func saveToCoreData(movieData : Movie) {
+        
+        let entity = NSEntityDescription.entity(forEntityName: "MovieData", in: context)
+        let movie = NSManagedObject(entity: entity!, insertInto: context)
+        
+        movie.setValue(movieData.title, forKey: "movieTitle")
+        movie.setValue(movieData.rating, forKey: "movieRate")
+        movie.setValue(movieData.releaseYear, forKey: "movieRelease")
+        
+        
+        if movieData.image != nil{
+            movie.setValue(movieData.image, forKey: "movieImage")
+        }else{
+            movie.setValue(movieData.imageData, forKey: "movieImgeData")
+        }
+        
+        movie.setValue(movieData.genre, forKey: "movieGenra")
+        
+        
+        do{
+            try context.save()
+            
+            print("data saved")
+            
+        }catch let error as NSError{
+            print(error)
+        }
+        
+    }
+    
+    
+    func fetchFromCoreData(){
+        
+        var moviesManagedObject = [MovieData]()
+        
+        let fetchRequest = NSFetchRequest<MovieData>(entityName: "MovieData") // select * from MovieData
+        
+        do{
+            
+            moviesManagedObject = try context.fetch(fetchRequest)
+            
+                        
+            
+            for index in 0..<moviesManagedObject.count {
+                 
+                movieArray.append(Movie(title: moviesManagedObject[index].movieTitle!, imgData: moviesManagedObject[index].movieImgeData!, rate: moviesManagedObject[index].movieRate, releaseYear: Int(moviesManagedObject[index].movieRelease), genra: moviesManagedObject[index].movieGenra!))
+            }
+            
+        }catch let error as NSError{
+            print(error)
+        }
+        
+        
+    }
+    
+        
+}
+
+
+// connect to api
+extension MovieTableViewController{
+    
+    func ConnectToApi() {
+        
+        // #1 url
+        let url = URL(string: "https://api.androidhive.info/json/movies.json")
+        
+        // #2 request
+        let request = URLRequest(url: url!)
+        
+        // #3 session
+        let session = URLSession(configuration: URLSessionConfiguration.default)
+        
+        // #4 task
+        let task = session.dataTask(with: request) { [self] (data, response, error) in
+            
+            // #6 exception handler
+            do{
+                
+                let decoder = JSONDecoder()
+                let jesonArray = try decoder.decode([Movie].self, from: data!)
+                self.movieArray = jesonArray
+                
+                DispatchQueue.main.async {
+                    
+                    self.tableView.reloadData()
+                    
+                }
+                                
+            }catch{
+                print(error)
+            }
+            
+        }
+        
+        // #5 start task
+        task.resume()
+    }
+    
+    
+    
+    
+}
+
+
+
+
+
 // Table view data source
 extension MovieTableViewController{
     
@@ -77,8 +210,18 @@ extension MovieTableViewController{
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! MovieTableViewCell
 
         cell.movieName.text = movieArray[indexPath.row].title
-        cell.movieImage.image = movieArray[indexPath.row].image
-        cell.movieGenra.text = movieArray[indexPath.row].genra.joined(separator: " | ")
+        if movieArray[indexPath.row].imageData != nil{
+                    // convert data to image
+            
+            cell.movieImage.image = UIImage(data: movieArray[indexPath.row].imageData!)
+            
+        }else{
+            
+            cell.movieImage.sd_setImage(with: URL(string: movieArray[indexPath.row].image ?? ""), placeholderImage: UIImage(named: "placeholder.png"))
+        }
+        cell.movieGenra.text = movieArray[indexPath.row].genre.joined(separator: " | ")
+        
+        
 
         return cell
     }
@@ -88,13 +231,20 @@ extension MovieTableViewController{
         let showView = self.storyboard?.instantiateViewController(identifier: "show_data") as! ViewController
         
         showView.name = movieArray[indexPath.row].title
-        showView.genra = movieArray[indexPath.row].genra
-        showView.image = movieArray[indexPath.row].image
-        showView.rate = movieArray[indexPath.row].rate
+        showView.genra = movieArray[indexPath.row].genre
+        
+        if movieArray[indexPath.row].imageData != nil{
+            showView.imageData = movieArray[indexPath.row].imageData
+            
+        }else{
+            
+            showView.image = movieArray[indexPath.row].image
+        }
+        
+        showView.rate = movieArray[indexPath.row].rating
         showView.releaseYear = movieArray[indexPath.row].releaseYear
         
         
-        //self.navigationController?.pushViewController(showView, animated: true)
         
         self.present(showView, animated: true, completion: nil)
     }
@@ -103,7 +253,40 @@ extension MovieTableViewController{
         return 150
     }
     
-
-
+    
+    // Override to support editing the table view.
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            
+            // remove from table
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            
+            if movieArray[indexPath.row].imageData != nil{
+                
+                // remove from core data
+                //context.delete(movieArray[indexPath.row] as! NSManagedObject)
+                
+                
+            }else{
+                // can i remove from api?!
+            }
+            
+            // remove from array
+            movieArray.remove(at: indexPath.row)
+            
+            
+            
+            
+            
+            
+            
+            
+            
+        } else if editingStyle == .insert {
+            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+        }
+    }
     
 }
+
+
