@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FloatRatingView
 
 class MovieTableViewCell: UITableViewCell {
 
@@ -20,6 +21,7 @@ class MovieTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    @IBOutlet weak var ratingView: FloatRatingView!
     
     @IBOutlet weak var movieImage: UIImageView!
     

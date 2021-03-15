@@ -9,5 +9,6 @@ target 'Movie Application' do
   
   pod 'SDWebImage'
   pod 'ReachabilitySwift'
+  pod 'FloatRatingView', '~> 4'
 
 end

@@ -4,12 +4,14 @@ import UIKit
 import SDWebImage
 import CoreData
 import Reachability
+import FloatRatingView
 
 class MovieTableViewController: UITableViewController, AddMovieProtocol{
 
     var movieArray = [Movie]()
     var genraArray = [String]()
-    var movieAddedArray = [Movie]()
+    var movieAddedArray = [NSManagedObject]()
+    
     
     
     //declare this property where it won't go out of scope relative to your listener
@@ -24,31 +26,18 @@ class MovieTableViewController: UITableViewController, AddMovieProtocol{
         
         genraArray = ["Action", "Drama", "Sci-Fi", "Thriller", "Adventure", "History", "Animation", "Comedy", "Family", "Horror", "Crime"]
 
-        
         self.tableView.tableFooterView = UIView.init(frame: CGRect.zero)
-        
-    
-
-        reachability.whenReachable = { [self] reachability in
-            if reachability.connection == .wifi || reachability.connection == .cellular{
-                print("Reachable via WiFi")
-                
-                ConnectToApi()
-                fetchFromCoreData()
-            }
-        }
-        
-        reachability.whenUnreachable = { [self] _ in
-            print("Not reachable")
-            
-            fetchFromCoreData()
-        }
         
         ConnectToApi()
         fetchFromCoreData()
         
-        
-                        
+//        do{
+//            try reachability.startNotifier()
+//
+//        }catch{
+//            print("sdfghjkl  dfghjk erty ")
+//        }
+    
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -77,7 +66,22 @@ class MovieTableViewController: UITableViewController, AddMovieProtocol{
 
     }
     
+    
+    @IBAction func showImageCollection(_ sender: Any) {
+        
+        let imageCollection = self.storyboard?.instantiateViewController(identifier: "image_collection") as! MovieImageCollectionViewController
+        
+        imageCollection.movieArr = movieArray
+        
+        self.navigationController?.pushViewController(imageCollection, animated: true)
+        
+        
+    }
+    
+    
 }
+
+
 
 
 // core data
@@ -117,20 +121,20 @@ extension MovieTableViewController{
     
     func fetchFromCoreData(){
         
-        var moviesManagedObject = [MovieData]()
-        
         let fetchRequest = NSFetchRequest<MovieData>(entityName: "MovieData") // select * from MovieData
         
         do{
-            
+            var moviesManagedObject = [MovieData]()
             moviesManagedObject = try context.fetch(fetchRequest)
-            
-                        
+            movieAddedArray = try context.fetch(fetchRequest)
             
             for index in 0..<moviesManagedObject.count {
-                 
+
                 movieArray.append(Movie(title: moviesManagedObject[index].movieTitle!, imgData: moviesManagedObject[index].movieImgeData!, rate: moviesManagedObject[index].movieRate, releaseYear: Int(moviesManagedObject[index].movieRelease), genra: moviesManagedObject[index].movieGenra!))
             }
+            
+
+            
             
         }catch let error as NSError{
             print(error)
@@ -202,24 +206,70 @@ extension MovieTableViewController{
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
-        return movieArray.count
+        var numberOfRows = 0
+        
+        if reachability.connection == .wifi || reachability.connection == .cellular{
+            
+            numberOfRows = movieArray.count
+            
+        }else{
+            
+            numberOfRows = movieAddedArray.count
+            
+        }
+        
+        return numberOfRows
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! MovieTableViewCell
 
-        cell.movieName.text = movieArray[indexPath.row].title
-        if movieArray[indexPath.row].imageData != nil{
-                    // convert data to image
+//        cell.ratingView.fullImage = UIImage(named: "StarFull")
+//        cell.ratingView.emptyImage = UIImage(named: "StarEmpty")
+//        cell.ratingView.delegate = self
+        
+        
+        cell.ratingView.contentMode = UIView.ContentMode.scaleAspectFit
+        cell.ratingView.type = .floatRatings
+        
+        
+        cell.imageView?.startAnimating()
+        cell.ratingView.maxRating = 10
+        cell.ratingView.editable = false
+        
+        if reachability.connection == .wifi || reachability.connection == .cellular{
             
-            cell.movieImage.image = UIImage(data: movieArray[indexPath.row].imageData!)
+            
+            cell.ratingView.rating = movieArray[indexPath.row].rating
+            
+
+            
+
+            cell.movieName.text = movieArray[indexPath.row].title
+            if movieArray[indexPath.row].imageData != nil{
+                        // convert data to image
+                
+                cell.movieImage.image = UIImage(data: movieArray[indexPath.row].imageData!)
+                
+            }else{
+                
+                cell.movieImage.sd_setImage(with: URL(string: movieArray[indexPath.row].image ?? ""), placeholderImage: UIImage(named: "placeholder.png"))
+            }
+            cell.movieGenra.text = movieArray[indexPath.row].genre.joined(separator: " | ")
             
         }else{
             
-            cell.movieImage.sd_setImage(with: URL(string: movieArray[indexPath.row].image ?? ""), placeholderImage: UIImage(named: "placeholder.png"))
+            cell.movieName.text = movieAddedArray[indexPath.row].value(forKey: "movieTitle") as? String
+            cell.movieImage.image = UIImage(data: movieAddedArray[indexPath.row].value(forKey: "movieImgeData") as! Data)
+            cell.movieGenra.text = (movieAddedArray[indexPath.row].value(forKey: "movieGenra") as! [String]).joined(separator: " | ")
+            
+            
+            //movieTitle    movieImgeData   movieRelease    movieRate   movieGenra
+            
         }
-        cell.movieGenra.text = movieArray[indexPath.row].genre.joined(separator: " | ")
+        
+
         
         
 
@@ -257,36 +307,45 @@ extension MovieTableViewController{
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
+                
             
-            // remove from table
-            tableView.deleteRows(at: [indexPath], with: .fade)
             
             if movieArray[indexPath.row].imageData != nil{
                 
-                // remove from core data
-                //context.delete(movieArray[indexPath.row] as! NSManagedObject)
+               
                 
+                // get index
+//                int removedIndex = indexPath.row -
                 
-            }else{
-                // can i remove from api?!
+                //remove from core data
+                context.delete(movieAddedArray[indexPath.row - (movieArray.count - movieAddedArray.count)])
+                
+                // remove from array
+                movieArray.remove(at: indexPath.row)
+                
+                // save changes
+                do{
+                    
+                    try context.save()
+                    print("data removed")
+                    
+                    
+                }catch let error as NSError{
+                    print(error)
+                }
+                
+                // remove from table
+                tableView.deleteRows(at: [indexPath], with: .fade)
             }
             
-            // remove from array
-            movieArray.remove(at: indexPath.row)
-            
-            
-            
-            
-            
-            
-            
+        
             
             
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }
     }
-    
-}
 
+
+}
 
