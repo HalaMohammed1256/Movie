@@ -1,25 +1,25 @@
 
 
 import UIKit
+import CoreData
+import Reachability
 
-private let reuseIdentifier = "images_cell"
 
 class MovieImageCollectionViewController: UICollectionViewController {
     
     
     var movieArr : [Movie] = [Movie]()
+    var movieAddedArr = [NSManagedObject]()
+    
     
 
+    //declare this property where it won't go out of scope relative to your listener
+    let reachability = try! Reachability()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Register cell classes
-        self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-
-        // Do any additional setup after loading the view.
+        print(movieArr)
     }
 
 
@@ -39,16 +39,28 @@ extension MovieImageCollectionViewController {
 
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+                
+        var numberOfRows = 0
         
-        return movieArr.count
+        if reachability.connection == .wifi || reachability.connection == .cellular{
+
+            numberOfRows = movieArr.count
+
+        }else{
+            
+            numberOfRows = movieAddedArr.count
+            
+        }
+        
+        return numberOfRows
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! ImageCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ShowImageCollectionViewCell", for: indexPath) as! ShowImageCollectionViewCell
     
         
-        if movieArr[indexPath.row].imageData != nil{
-            cell.movieImage.image = UIImage(data:  movieArr[indexPath.row].imageData!)
+        if reachability.connection == .unavailable{
+            cell.movieImage.image =  UIImage(data: movieAddedArr[indexPath.row].value(forKey: "movieImgeData") as! Data)
             
         }else{
             cell.movieImage.sd_setImage(with: URL(string:  movieArr[indexPath.row].image!), placeholderImage: UIImage(named: "placeholder.png"))
@@ -56,6 +68,11 @@ extension MovieImageCollectionViewController {
     
         return cell
     }
+    
+    override func size(forChildContentContainer container: UIContentContainer, withParentContainerSize parentSize: CGSize) -> CGSize {
+        return CGSize(width: 20, height: 20)
+    }
+    
 
     // MARK: UICollectionViewDelegate
 

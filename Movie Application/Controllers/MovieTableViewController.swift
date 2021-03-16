@@ -31,24 +31,24 @@ class MovieTableViewController: UITableViewController, AddMovieProtocol{
         ConnectToApi()
         fetchFromCoreData()
         
-//        do{
-//            try reachability.startNotifier()
-//
-//        }catch{
-//            print("sdfghjkl  dfghjk erty ")
-//        }
+        do{
+            try reachability.startNotifier()
+
+        }catch{
+            print("sdfghjkl  dfghjk erty ")
+        }
     
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
         self.tableView.reloadData()
     }
     
     func addMovieDelegation(movie: Movie) {
-        movieArray.append(movie)
+       // movieArray.append(movie)
         
         saveToCoreData(movieData: movie)
+        fetchFromCoreData()
         
         self.tableView.reloadData()
     }
@@ -71,7 +71,15 @@ class MovieTableViewController: UITableViewController, AddMovieProtocol{
         
         let imageCollection = self.storyboard?.instantiateViewController(identifier: "image_collection") as! MovieImageCollectionViewController
         
-        imageCollection.movieArr = movieArray
+        if reachability.connection == .unavailable{
+            
+            imageCollection.movieAddedArr = movieAddedArray
+            
+        }else{
+            
+            imageCollection.movieArr = movieArray
+            
+        }
         
         self.navigationController?.pushViewController(imageCollection, animated: true)
         
@@ -124,17 +132,19 @@ extension MovieTableViewController{
         let fetchRequest = NSFetchRequest<MovieData>(entityName: "MovieData") // select * from MovieData
         
         do{
-            var moviesManagedObject = [MovieData]()
-            moviesManagedObject = try context.fetch(fetchRequest)
+//            var moviesManagedObject = [MovieData]()
+//            moviesManagedObject = try context.fetch(fetchRequest)
             movieAddedArray = try context.fetch(fetchRequest)
+            print(movieAddedArray)
+//            for index in 0..<moviesManagedObject.count {
+//
+//                movieArray.append(Movie(title: moviesManagedObject[index].movieTitle!, imgData: moviesManagedObject[index].movieImgeData!, rate: moviesManagedObject[index].movieRate, releaseYear: Int(moviesManagedObject[index].movieRelease), genra: moviesManagedObject[index].movieGenra!))
+//            }
             
-            for index in 0..<moviesManagedObject.count {
 
-                movieArray.append(Movie(title: moviesManagedObject[index].movieTitle!, imgData: moviesManagedObject[index].movieImgeData!, rate: moviesManagedObject[index].movieRate, releaseYear: Int(moviesManagedObject[index].movieRelease), genra: moviesManagedObject[index].movieGenra!))
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
             }
-            
-
-            
             
         }catch let error as NSError{
             print(error)
@@ -151,45 +161,45 @@ extension MovieTableViewController{
 extension MovieTableViewController{
     
     func ConnectToApi() {
-        
+
         // #1 url
         let url = URL(string: "https://api.androidhive.info/json/movies.json")
-        
+
         // #2 request
         let request = URLRequest(url: url!)
-        
+
         // #3 session
         let session = URLSession(configuration: URLSessionConfiguration.default)
-        
+
         // #4 task
         let task = session.dataTask(with: request) { [self] (data, response, error) in
-            
+
             // #6 exception handler
             do{
-                
+
                 let decoder = JSONDecoder()
                 let jesonArray = try decoder.decode([Movie].self, from: data!)
                 self.movieArray = jesonArray
-                
+
                 DispatchQueue.main.async {
-                    
+
                     self.tableView.reloadData()
-                    
+
                 }
-                                
+
             }catch{
                 print(error)
             }
-            
+
         }
-        
+
         // #5 start task
         task.resume()
     }
-    
-    
-    
-    
+
+
+
+
 }
 
 
@@ -209,11 +219,11 @@ extension MovieTableViewController{
         var numberOfRows = 0
         
         if reachability.connection == .wifi || reachability.connection == .cellular{
-            
+
             numberOfRows = movieArray.count
-            
+
         }else{
-            
+
             numberOfRows = movieAddedArray.count
             
         }
@@ -225,10 +235,6 @@ extension MovieTableViewController{
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! MovieTableViewCell
 
-//        cell.ratingView.fullImage = UIImage(named: "StarFull")
-//        cell.ratingView.emptyImage = UIImage(named: "StarEmpty")
-//        cell.ratingView.delegate = self
-        
         
         cell.ratingView.contentMode = UIView.ContentMode.scaleAspectFit
         cell.ratingView.type = .floatRatings
@@ -239,39 +245,33 @@ extension MovieTableViewController{
         cell.ratingView.editable = false
         
         if reachability.connection == .wifi || reachability.connection == .cellular{
-            
-            
-            cell.ratingView.rating = movieArray[indexPath.row].rating
-            
 
-            
+
+            cell.ratingView.rating = movieArray[indexPath.row].rating
 
             cell.movieName.text = movieArray[indexPath.row].title
             if movieArray[indexPath.row].imageData != nil{
                         // convert data to image
-                
+
                 cell.movieImage.image = UIImage(data: movieArray[indexPath.row].imageData!)
-                
+
             }else{
-                
+
                 cell.movieImage.sd_setImage(with: URL(string: movieArray[indexPath.row].image ?? ""), placeholderImage: UIImage(named: "placeholder.png"))
             }
             cell.movieGenra.text = movieArray[indexPath.row].genre.joined(separator: " | ")
-            
+
         }else{
             
             cell.movieName.text = movieAddedArray[indexPath.row].value(forKey: "movieTitle") as? String
             cell.movieImage.image = UIImage(data: movieAddedArray[indexPath.row].value(forKey: "movieImgeData") as! Data)
             cell.movieGenra.text = (movieAddedArray[indexPath.row].value(forKey: "movieGenra") as! [String]).joined(separator: " | ")
-            
-            
-            //movieTitle    movieImgeData   movieRelease    movieRate   movieGenra
-            
+            cell.ratingView.rating = movieAddedArray[indexPath.row].value(forKey: "movieRate") as! Double
         }
         
 
         
-        
+        //movieTitle    movieRate   movieRelease    movieImgeData   movieGenra
 
         return cell
     }
@@ -280,19 +280,23 @@ extension MovieTableViewController{
         
         let showView = self.storyboard?.instantiateViewController(identifier: "show_data") as! ViewController
         
-        showView.name = movieArray[indexPath.row].title
-        showView.genra = movieArray[indexPath.row].genre
         
-        if movieArray[indexPath.row].imageData != nil{
-            showView.imageData = movieArray[indexPath.row].imageData
+        if reachability.connection == .unavailable{
+            showView.imageData = movieAddedArray[indexPath.row].value(forKey: "movieImgeData") as? Data
+            showView.rate = movieAddedArray[indexPath.row].value(forKey: "movieRate") as? Double
+            showView.name = movieAddedArray[indexPath.row].value(forKey: "movieTitle") as? String
+            showView.genra = movieAddedArray[indexPath.row].value(forKey: "movieGenra") as? [String]
+            showView.releaseYear = movieAddedArray[indexPath.row].value(forKey: "movieRelease") as? Int
             
         }else{
             
             showView.image = movieArray[indexPath.row].image
+            showView.rate = movieArray[indexPath.row].rating
+            showView.name = movieArray[indexPath.row].title
+            showView.genra = movieArray[indexPath.row].genre
+            showView.releaseYear = movieArray[indexPath.row].releaseYear
         }
-        
-        showView.rate = movieArray[indexPath.row].rating
-        showView.releaseYear = movieArray[indexPath.row].releaseYear
+    
         
         
         
@@ -309,19 +313,13 @@ extension MovieTableViewController{
         if editingStyle == .delete {
                 
             
-            
-            if movieArray[indexPath.row].imageData != nil{
-                
-               
-                
-                // get index
-//                int removedIndex = indexPath.row -
+            if reachability.connection == .unavailable{
                 
                 //remove from core data
-                context.delete(movieAddedArray[indexPath.row - (movieArray.count - movieAddedArray.count)])
+                context.delete(movieAddedArray[indexPath.row])
                 
                 // remove from array
-                movieArray.remove(at: indexPath.row)
+                movieAddedArray.remove(at: indexPath.row)
                 
                 // save changes
                 do{
@@ -337,6 +335,7 @@ extension MovieTableViewController{
                 // remove from table
                 tableView.deleteRows(at: [indexPath], with: .fade)
             }
+        
             
         
             
