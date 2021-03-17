@@ -19,6 +19,10 @@ class MovieImageCollectionViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        let layout = UICollectionViewFlowLayout()
+        layout.itemSize = CGSize(width: 150, height: 150)
+        
+        
         print(movieArr)
     }
 
@@ -73,6 +77,8 @@ extension MovieImageCollectionViewController {
         return CGSize(width: 20, height: 20)
     }
     
+    
+    
 
     // MARK: UICollectionViewDelegate
 
@@ -107,3 +113,4 @@ extension MovieImageCollectionViewController {
     
     
 }
+
