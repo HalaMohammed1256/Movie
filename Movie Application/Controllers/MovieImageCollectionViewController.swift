@@ -73,9 +73,9 @@ extension MovieImageCollectionViewController {
         return cell
     }
     
-    override func size(forChildContentContainer container: UIContentContainer, withParentContainerSize parentSize: CGSize) -> CGSize {
-        return CGSize(width: 20, height: 20)
-    }
+//    override func size(forChildContentContainer container: UIContentContainer, withParentContainerSize parentSize: CGSize) -> CGSize {
+//        return CGSize(width: 20, height: 20)
+//    }
     
     
     

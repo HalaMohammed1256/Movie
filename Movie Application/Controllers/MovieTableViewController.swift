@@ -247,7 +247,7 @@ extension MovieTableViewController{
         if reachability.connection == .wifi || reachability.connection == .cellular{
 
 
-            cell.ratingView.rating = movieArray[indexPath.row].rating
+            cell.ratingView.rating = movieArray[indexPath.row].rating 
 
             cell.movieName.text = movieArray[indexPath.row].title
             if movieArray[indexPath.row].imageData != nil{

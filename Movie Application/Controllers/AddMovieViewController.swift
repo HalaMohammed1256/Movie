@@ -58,7 +58,6 @@ class AddMovieViewController: UIViewController, SelectGendraProtocol{
     }
     
     
-    
     @IBAction func saveNewMovie(_ sender: Any) {
         
         
